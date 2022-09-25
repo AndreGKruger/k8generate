@@ -20,10 +20,11 @@ run `k8generate --help` for more information.
 ---
 
 ### Available Commands:
-    - help        Help about any command
+    - all         Generates all the k8 files (configmap, secret, deployment, service)    
     - configmap   Generates a k8_configmap.yaml file
     - deployment  Generates a k8_deployment.yaml file
-    - secret      Generates a k8_secret.yaml file
+    - help        Help about any command
+    - secret      Generates a k8_secrets.yaml file
     - service     Generates a k8_service.yaml file
 ---
 
@@ -61,5 +62,9 @@ Note:
     k8_secret.yaml
     k8_service.yaml
 Files are generated in ./kubernetes/{env}/ IE : ./kubernetes/production/k8_configmap.yaml
+
+### Secrets 
+    Any env key that contains one of the following strings will be considered a secret and will be generated in the k8_secret.yaml file
+    "secret", "api", "key", "pass", "user", "token"
 
 ---
