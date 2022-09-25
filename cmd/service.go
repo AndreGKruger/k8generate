@@ -37,7 +37,6 @@ For example: kubernetes/production/k8_service.yaml .`,
 
 func init() {
 	rootCmd.AddCommand(serviceCmd)
-
 	// Local flags
 	serviceCmd.Flags().StringVarP(&Appname, "appname", "a", "", "name of the application")
 	serviceCmd.MarkFlagRequired("appname")

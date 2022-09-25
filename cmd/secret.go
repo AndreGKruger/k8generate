@@ -14,13 +14,11 @@ import (
 // secretCmd represents the secret command
 var secretCmd = &cobra.Command{
 	Use:   "secret",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "Generates a k8_secret.yaml file",
+	Long: `The secret command generates a k8_secrets.yaml file.
+The file is generated in the directory ./kubernetes/{Appenv}/k8_secrets.yaml.
+The command looks for a .env file in your applications root directory to build out the environment section
+For example: kubernetes/production/k8_secrets.yaml .`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("secret called")
 		s := secret.New(strings.ToLower(Appname), strings.ToLower(Appenv), strings.ToLower(Namespace))
