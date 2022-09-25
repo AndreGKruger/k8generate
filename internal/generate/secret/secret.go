@@ -1,6 +1,8 @@
 package secret
 
 import (
+	"encoding/base64"
+	"fmt"
 	"os"
 	"strings"
 
@@ -42,7 +44,11 @@ func (s *secretImpl) Generate() error {
 	//Open .env.example file in project root directory of the application
 	envfile, err := os.ReadFile(".env")
 	if err != nil {
-		return err
+		if os.IsNotExist(err) {
+			fmt.Println("No .env file found in project root directory. The secrets file will be generated without any environment variables.")
+		} else {
+			return err
+		}
 	}
 	//Split the file into lines
 	lines := strings.Split(string(envfile), "\n")
@@ -51,7 +57,7 @@ func (s *secretImpl) Generate() error {
 		if line != "" {
 			if generate.ContainsSecrets(line) {
 				env := strings.Split(line, "=")
-				s.Envvars = append(s.Envvars, envvar{Name: strings.ToLower(env[0]), Value: env[1]})
+				s.Envvars = append(s.Envvars, envvar{Name: strings.ToLower(env[0]), Value: base64.StdEncoding.EncodeToString([]byte(env[1]))})
 			}
 		}
 	}

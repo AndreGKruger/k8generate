@@ -14,7 +14,7 @@ import (
 // configmapCmd represents the configmap command
 var configmapCmd = &cobra.Command{
 	Use:   "configmap",
-	Short: "A brief description of your command",
+	Short: "Generates a k8_configmap.yaml file",
 	Long: `A longer description that spans multiple lines and likely contains examples
 and usage of using your command. For example:
 

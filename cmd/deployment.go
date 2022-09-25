@@ -6,7 +6,14 @@ package cmd
 import (
 	"fmt"
 
+	"github.com/AndreGKruger/k8generate/internal/generate/deployment"
 	"github.com/spf13/cobra"
+)
+
+var (
+	Repoendpoint string
+	Reponame     string
+	Repoversion  string
 )
 
 // deploymentCmd represents the deployment command
@@ -19,6 +26,12 @@ The command looks for a .env.example file in your applications root directory to
 For example: kubernetes/production/k8_deployment.yaml .`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("deployment called")
+		d := deployment.New(Appname, Appenv, Namespace, Repoendpoint, Reponame, Repoversion)
+		err := d.Generate()
+		if err != nil {
+			fmt.Println(err)
+		}
+		fmt.Printf("kubernetes deployment file generated at ./kubernetes/%s/k8_deployment.yaml", Appenv)
 	},
 }
 
@@ -30,4 +43,11 @@ func init() {
 	deploymentCmd.Flags().StringVarP(&Appenv, "env", "e", "", "name of the environment IE:production, staging, development")
 	deploymentCmd.MarkFlagRequired("appenv")
 	deploymentCmd.Flags().StringVarP(&Namespace, "namespace", "n", "", "namespace of the application, defaults to appname-env IE myapp-production")
+	deploymentCmd.Flags().StringVarP(&Repoendpoint, "repoendpoint", "r", "", "endpoint of the repository IE: xyz.dkr.ecr.eu-west-1.amazonaws.com")
+	deploymentCmd.MarkFlagRequired("repoendpoint")
+	deploymentCmd.Flags().StringVarP(&Reponame, "reponame", "p", "", "name of the repository IE: myrepo/myapp")
+	deploymentCmd.MarkFlagRequired("reponame")
+	deploymentCmd.Flags().StringVarP(&Repoversion, "repoversion", "v", "", "version of the repository IE: 1.0.0")
+	deploymentCmd.MarkFlagRequired("repoversion")
+
 }

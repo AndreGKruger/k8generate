@@ -1,6 +1,7 @@
 package configmap
 
 import (
+	"fmt"
 	"os"
 	"strings"
 
@@ -42,7 +43,12 @@ func (c *configmapImpl) Generate() error {
 	//Open .env.example file in project root directory of the application
 	envfile, err := os.ReadFile(".env")
 	if err != nil {
-		return err
+		//check if the error is because the file does not exist
+		if os.IsNotExist(err) {
+			fmt.Println("No .env file found in project root directory. The configmap will be generated without any environment variables.")
+		} else {
+			return err
+		}
 	}
 	//Split the file into lines
 	lines := strings.Split(string(envfile), "\n")
