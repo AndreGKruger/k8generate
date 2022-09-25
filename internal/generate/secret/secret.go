@@ -1,4 +1,4 @@
-package configmap
+package secret
 
 import (
 	"os"
@@ -8,17 +8,17 @@ import (
 )
 
 const (
-	TEMPLATE_LOCATION = "internal/generate/configmap/template.txt"
+	TEMPLATE_LOCATION = "internal/generate/secret/template.txt"
 )
 
 func New(Appname string, Appenv string, Namespace string) generate.Generate {
 	if Namespace == "" {
 		Namespace = Appname + "-" + Appenv
 	}
-	return &configmapImpl{
+	return &secretImpl{
 		Appname:    Appname,
 		Appenv:     Appenv,
-		filename:   "k8_configmap.yaml",
+		filename:   "k8_secrets.yaml",
 		foldername: "./kubernetes/" + Appenv,
 		Namespace:  Namespace,
 	}
@@ -29,7 +29,7 @@ type envvar struct {
 	Value string
 }
 
-type configmapImpl struct {
+type secretImpl struct {
 	Appname    string
 	Appenv     string
 	Namespace  string
@@ -38,7 +38,7 @@ type configmapImpl struct {
 	foldername string
 }
 
-func (c *configmapImpl) Generate() error {
+func (s *secretImpl) Generate() error {
 	//Open .env.example file in project root directory of the application
 	envfile, err := os.ReadFile(".env")
 	if err != nil {
@@ -49,12 +49,12 @@ func (c *configmapImpl) Generate() error {
 	//Loop through the lines and create a slice of envvars
 	for _, line := range lines {
 		if line != "" {
-			if !generate.ContainsSecrets(line) {
+			if generate.ContainsSecrets(line) {
 				env := strings.Split(line, "=")
-				c.Envvars = append(c.Envvars, envvar{Name: strings.ToLower(env[0]), Value: env[1]})
+				s.Envvars = append(s.Envvars, envvar{Name: strings.ToLower(env[0]), Value: env[1]})
 			}
 		}
 	}
 
-	return generate.ProcessTemplate(TEMPLATE_LOCATION, c.foldername, c.filename, c)
+	return generate.ProcessTemplate(TEMPLATE_LOCATION, s.foldername, s.filename, s)
 }
