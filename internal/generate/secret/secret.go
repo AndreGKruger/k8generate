@@ -9,10 +9,6 @@ import (
 	"github.com/AndreGKruger/k8generate/internal/generate"
 )
 
-const (
-	TEMPLATE_LOCATION = "internal/generate/secret/template.txt"
-)
-
 func New(Appname string, Appenv string, Namespace string) generate.Generate {
 	if Namespace == "" {
 		Namespace = Appname + "-" + Appenv
@@ -62,5 +58,17 @@ func (s *secretImpl) Generate() error {
 		}
 	}
 
-	return generate.ProcessTemplate(TEMPLATE_LOCATION, s.foldername, s.filename, s)
+	return generate.ProcessTemplate(template, s.foldername, s.filename, s)
 }
+
+var template = `apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ .Appname }}-sk
+  namespace: {{ .Namespace }}
+  labels:
+    app: {{ .Appname }}-sk
+data:
+{{range .Envvars}}  {{.Name}}: {{.Value}}
+{{end}}
+type: Opaque`

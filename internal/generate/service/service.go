@@ -7,10 +7,6 @@ import (
 	"github.com/AndreGKruger/k8generate/internal/generate"
 )
 
-const (
-	TEMPLATE_LOCATION = "internal/generate/service/template.txt"
-)
-
 func New(Appname string, Appenv string, Namespace string) generate.Generate {
 	if Namespace == "" {
 		Namespace = Appname + "-" + Appenv
@@ -33,5 +29,19 @@ type serviceImpl struct {
 }
 
 func (s *serviceImpl) Generate() error {
-	return generate.ProcessTemplate(TEMPLATE_LOCATION, s.foldername, s.filename, s)
+	return generate.ProcessTemplate(template, s.foldername, s.filename, s)
 }
+
+var template = `apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Appname }}-svc
+  namespace: {{ .Namespace }}
+  labels:
+    app: {{ .Appname }}-svc
+spec:
+  type: NodePort
+  ports:
+    - port: 80
+  selector:
+    app: {{ .Appname }}`

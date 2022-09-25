@@ -23,9 +23,9 @@ func ContainsSecrets(envvar string) bool {
 	return false
 }
 
-func ProcessTemplate(templateLocation string, foldername string, filename string, data interface{}) error {
+func ProcessTemplate(templateData string, foldername string, filename string, data interface{}) error {
 	//Setup the template
-	tmpl, err := template.New("template.txt").ParseFiles(templateLocation)
+	tmpl, err := template.New("template.txt").Parse(templateData)
 	if err != nil {
 		return err
 	}

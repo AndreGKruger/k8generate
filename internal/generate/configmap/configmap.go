@@ -8,10 +8,6 @@ import (
 	"github.com/AndreGKruger/k8generate/internal/generate"
 )
 
-const (
-	TEMPLATE_LOCATION = "internal/generate/configmap/template.txt"
-)
-
 func New(Appname string, Appenv string, Namespace string) generate.Generate {
 	if Namespace == "" {
 		Namespace = Appname + "-" + Appenv
@@ -62,5 +58,16 @@ func (c *configmapImpl) Generate() error {
 		}
 	}
 
-	return generate.ProcessTemplate(TEMPLATE_LOCATION, c.foldername, c.filename, c)
+	return generate.ProcessTemplate(template, c.foldername, c.filename, c)
 }
+
+var template = `apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Appname }}-cfg
+  namespace: {{ .Namespace }}
+  labels:
+    app: {{ .Appname }}-cfg
+data:
+{{range .Envvars}}  {{.Name}}: "{{.Value}}"
+{{end}}`
