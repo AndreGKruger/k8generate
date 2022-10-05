@@ -8,13 +8,14 @@ import (
 	"github.com/AndreGKruger/k8generate/internal/generate/service"
 )
 
-func New(Appname string, Appport string, Appenv string, Namespace string, Repoendpoint string, Reponame string, Repoversion string) generate.Generate {
+func New(Appname string, Podport string, Serviceport string, Appenv string, Namespace string, Repoendpoint string, Reponame string, Repoversion string) generate.Generate {
 	if Namespace == "" {
 		Namespace = Appname + "-" + Appenv
 	}
 	return &allImpl{
 		Appname:      Appname,
-		Appport:      Appport,
+		Podport:      Podport,
+		Serviceport:  Serviceport,
 		Appenv:       Appenv,
 		Namespace:    Namespace,
 		Repoendpoint: Repoendpoint,
@@ -32,7 +33,8 @@ type envvar struct {
 
 type allImpl struct {
 	Appname      string
-	Appport      string
+	Serviceport  string
+	Podport      string
 	Appenv       string
 	Namespace    string
 	Repoendpoint string
@@ -55,12 +57,12 @@ func (s *allImpl) Generate() error {
 	if err != nil {
 		return err
 	}
-	dep := deployment.New(s.Appname, s.Appenv, s.Namespace, s.Repoendpoint, s.Reponame, s.Repoversion)
+	dep := deployment.New(s.Appname, s.Podport, s.Appenv, s.Namespace, s.Repoendpoint, s.Reponame, s.Repoversion)
 	err = dep.Generate()
 	if err != nil {
 		return err
 	}
-	serv := service.New(s.Appname, s.Appenv, s.Namespace)
+	serv := service.New(s.Appname, s.Serviceport, s.Appenv, s.Namespace)
 	err = serv.Generate()
 	if err != nil {
 		return err

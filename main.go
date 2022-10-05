@@ -1,5 +1,5 @@
 /*
-Copyright © 2022 Andre Kruger <andre@hyvemobile.co.za>
+Copyright © 2022 Andre Kruger
 */
 package main
 

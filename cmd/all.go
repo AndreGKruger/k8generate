@@ -1,5 +1,5 @@
 /*
-Copyright © 2022 NAME HERE <EMAIL ADDRESS>
+Copyright © 2022 Andre Kruger
 */
 package cmd
 
@@ -10,7 +10,6 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// allCmd represents the all command
 var allCmd = &cobra.Command{
 	Use:   "all",
 	Short: "Generates all the k8 files (configmap, secret, deployment, service)",
@@ -21,7 +20,7 @@ The command looks for a .env file in your applications root directory to build o
 For example: kubernetes/production/k8_deployment.yaml ....`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("all called")
-		a := all.New(Appname, Appport, Appenv, Namespace, Repoendpoint, Reponame, Repoversion)
+		a := all.New(Appname, Podport, Serviceport, Appenv, Namespace, Repoendpoint, Reponame, Repoversion)
 		err := a.Generate()
 		if err != nil {
 			fmt.Println(err)
@@ -32,13 +31,4 @@ For example: kubernetes/production/k8_deployment.yaml ....`,
 
 func init() {
 	rootCmd.AddCommand(allCmd)
-
-	// Local flags
-	// allCmd.Flags().StringVarP(&Appname, "appname", "a", "testapp", "name of the application")
-	// allCmd.Flags().StringVarP(&Appport, "app port", "o", "80", "port of the application")
-	// allCmd.Flags().StringVarP(&Appenv, "env", "e", "staging", "name of the environment IE:production, staging, development")
-	// allCmd.Flags().StringVarP(&Namespace, "namespace", "n", "testapp-staging", "namespace of the application, defaults to appname-env IE myapp-production")
-	// allCmd.Flags().StringVarP(&Repoendpoint, "repo endpoint", "r", "xyz.dkr.ecr.eu-west-1.amazonaws.com", "endpoint of the repository IE: xyz.dkr.ecr.eu-west-1.amazonaws.com")
-	// allCmd.Flags().StringVarP(&Reponame, "repo name", "p", "myrepo/myapp", "name of the repository")
-	// allCmd.Flags().StringVarP(&Repoversion, "repo version", "v", "1.0.0", "version of the repository")
 }

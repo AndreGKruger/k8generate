@@ -31,10 +31,8 @@ type configmapImpl struct {
 }
 
 func (c *configmapImpl) Generate() error {
-	//Open .env.example file in project root directory of the application
 	envfile, err := os.ReadFile(".env")
 	if err != nil {
-		//check if the error is because the file does not exist
 		if os.IsNotExist(err) {
 			fmt.Println("No .env file found in project root directory. The configmap will be generated without any environment variables.")
 		} else {

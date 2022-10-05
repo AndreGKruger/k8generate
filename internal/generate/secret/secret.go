@@ -31,7 +31,6 @@ type secretImpl struct {
 }
 
 func (s *secretImpl) Generate() error {
-	//Open .env.example file in project root directory of the application
 	envfile, err := os.ReadFile(".env")
 	if err != nil {
 		if os.IsNotExist(err) {

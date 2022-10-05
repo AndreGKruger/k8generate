@@ -1,5 +1,5 @@
 /*
-Copyright © 2022 NAME HERE <EMAIL ADDRESS>
+Copyright © 2022 Andre Kruger
 */
 package cmd
 
@@ -11,7 +11,6 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// configmapCmd represents the configmap command
 var configmapCmd = &cobra.Command{
 	Use:   "configmap",
 	Short: "Generates a k8_configmap.yaml file",
@@ -32,10 +31,4 @@ For example: kubernetes/production/k8_configmap.yaml .`,
 
 func init() {
 	rootCmd.AddCommand(configmapCmd)
-	// Local flags
-	// configmapCmd.Flags().StringVarP(&Appname, "appname", "a", "", "name of the application")
-	// configmapCmd.MarkFlagRequired("appname")
-	// configmapCmd.Flags().StringVarP(&Appenv, "env", "e", "", "name of the environment IE:production, staging, development")
-	// configmapCmd.MarkFlagRequired("appenv")
-	// configmapCmd.Flags().StringVarP(&Namespace, "namespace", "n", "", "namespace of the application, defaults to appname-env IE myapp-production")
 }
