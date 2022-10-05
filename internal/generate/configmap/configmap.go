@@ -3,9 +3,9 @@ package configmap
 import (
 	"fmt"
 	"os"
-	"strings"
 
 	"github.com/AndreGKruger/k8generate/internal/generate"
+	e "github.com/AndreGKruger/k8generate/internal/generate/env_vars"
 )
 
 func New(Appname string, Appenv string, Namespace string) generate.Generate {
@@ -21,16 +21,11 @@ func New(Appname string, Appenv string, Namespace string) generate.Generate {
 	}
 }
 
-type envvar struct {
-	Name  string
-	Value string
-}
-
 type configmapImpl struct {
 	Appname    string
 	Appenv     string
 	Namespace  string
-	Envvars    []envvar
+	Envvars    []e.Envvar
 	filename   string
 	foldername string
 }
@@ -46,17 +41,8 @@ func (c *configmapImpl) Generate() error {
 			return err
 		}
 	}
-	//Split the file into lines
-	lines := strings.Split(string(envfile), "\n")
-	//Loop through the lines and create a slice of envvars
-	for _, line := range lines {
-		if line != "" && !strings.HasPrefix(line, "#") {
-			if !generate.ContainsSecrets(line) {
-				env := strings.Split(line, "=")
-				c.Envvars = append(c.Envvars, envvar{Name: strings.ToLower(env[0]), Value: env[1]})
-			}
-		}
-	}
+	env := e.New()
+	c.Envvars = env.GenerateVarsFromFileBytes(envfile, true)
 
 	return generate.ProcessTemplate(template, c.foldername, c.filename, c)
 }

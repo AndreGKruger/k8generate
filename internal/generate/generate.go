@@ -2,25 +2,12 @@ package generate
 
 import (
 	"fmt"
-	"html/template"
 	"os"
-	"strings"
+	"text/template"
 )
 
 type Generate interface {
 	Generate() error
-}
-
-var listOfSecrets = []string{"secret", "api", "key", "pass", "user", "token"}
-
-func ContainsSecrets(envvar string) bool {
-	//Check if the envvar contains any of the secrets
-	for _, secret := range listOfSecrets {
-		if strings.Contains(strings.ToLower(envvar), secret) {
-			return true
-		}
-	}
-	return false
 }
 
 func ProcessTemplate(templateData string, foldername string, filename string, data interface{}) error {
