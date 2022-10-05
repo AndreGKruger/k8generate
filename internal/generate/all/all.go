@@ -8,12 +8,13 @@ import (
 	"github.com/AndreGKruger/k8generate/internal/generate/service"
 )
 
-func New(Appname string, Appenv string, Namespace string, Repoendpoint string, Reponame string, Repoversion string) generate.Generate {
+func New(Appname string, Appport string, Appenv string, Namespace string, Repoendpoint string, Reponame string, Repoversion string) generate.Generate {
 	if Namespace == "" {
 		Namespace = Appname + "-" + Appenv
 	}
 	return &allImpl{
 		Appname:      Appname,
+		Appport:      Appport,
 		Appenv:       Appenv,
 		Namespace:    Namespace,
 		Repoendpoint: Repoendpoint,
@@ -31,6 +32,7 @@ type envvar struct {
 
 type allImpl struct {
 	Appname      string
+	Appport      string
 	Appenv       string
 	Namespace    string
 	Repoendpoint string

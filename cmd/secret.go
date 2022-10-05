@@ -33,9 +33,9 @@ For example: kubernetes/production/k8_secrets.yaml .`,
 func init() {
 	rootCmd.AddCommand(secretCmd)
 	// Local flags
-	secretCmd.Flags().StringVarP(&Appname, "appname", "a", "", "name of the application")
-	secretCmd.MarkFlagRequired("appname")
-	secretCmd.Flags().StringVarP(&Appenv, "env", "e", "", "name of the environment IE:production, staging, development")
-	secretCmd.MarkFlagRequired("appenv")
-	secretCmd.Flags().StringVarP(&Namespace, "namespace", "n", "", "namespace of the application, defaults to appname-env IE myapp-production")
+	// secretCmd.Flags().StringVarP(&Appname, "appname", "a", "", "name of the application")
+	// secretCmd.MarkFlagRequired("appname")
+	// secretCmd.Flags().StringVarP(&Appenv, "env", "e", "", "name of the environment IE:production, staging, development")
+	// secretCmd.MarkFlagRequired("appenv")
+	// secretCmd.Flags().StringVarP(&Namespace, "namespace", "n", "", "namespace of the application, defaults to appname-env IE myapp-production")
 }

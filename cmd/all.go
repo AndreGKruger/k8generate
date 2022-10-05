@@ -21,7 +21,7 @@ The command looks for a .env file in your applications root directory to build o
 For example: kubernetes/production/k8_deployment.yaml ....`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("all called")
-		a := all.New(Appname, Appenv, Namespace, Repoendpoint, Reponame, Repoversion)
+		a := all.New(Appname, Appport, Appenv, Namespace, Repoendpoint, Reponame, Repoversion)
 		err := a.Generate()
 		if err != nil {
 			fmt.Println(err)
@@ -34,15 +34,11 @@ func init() {
 	rootCmd.AddCommand(allCmd)
 
 	// Local flags
-	allCmd.Flags().StringVarP(&Appname, "appname", "a", "", "name of the application")
-	allCmd.MarkFlagRequired("appname")
-	allCmd.Flags().StringVarP(&Appenv, "env", "e", "", "name of the environment IE:production, staging, development")
-	allCmd.MarkFlagRequired("appenv")
-	allCmd.Flags().StringVarP(&Namespace, "namespace", "n", "", "namespace of the application, defaults to appname-env IE myapp-production")
-	allCmd.Flags().StringVarP(&Repoendpoint, "repo endpoint", "r", "", "endpoint of the repository IE: xyz.dkr.ecr.eu-west-1.amazonaws.com")
-	allCmd.MarkFlagRequired("repo endpoint")
-	allCmd.Flags().StringVarP(&Reponame, "repo name", "p", "", "name of the repository IE: myrepo/myapp")
-	allCmd.MarkFlagRequired("repo name")
-	allCmd.Flags().StringVarP(&Repoversion, "repo version", "v", "", "version of the repository IE: 1.0.0")
-	allCmd.MarkFlagRequired("repo version")
+	// allCmd.Flags().StringVarP(&Appname, "appname", "a", "testapp", "name of the application")
+	// allCmd.Flags().StringVarP(&Appport, "app port", "o", "80", "port of the application")
+	// allCmd.Flags().StringVarP(&Appenv, "env", "e", "staging", "name of the environment IE:production, staging, development")
+	// allCmd.Flags().StringVarP(&Namespace, "namespace", "n", "testapp-staging", "namespace of the application, defaults to appname-env IE myapp-production")
+	// allCmd.Flags().StringVarP(&Repoendpoint, "repo endpoint", "r", "xyz.dkr.ecr.eu-west-1.amazonaws.com", "endpoint of the repository IE: xyz.dkr.ecr.eu-west-1.amazonaws.com")
+	// allCmd.Flags().StringVarP(&Reponame, "repo name", "p", "myrepo/myapp", "name of the repository")
+	// allCmd.Flags().StringVarP(&Repoversion, "repo version", "v", "1.0.0", "version of the repository")
 }

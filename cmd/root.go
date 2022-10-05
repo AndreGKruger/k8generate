@@ -41,4 +41,11 @@ func init() {
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.
 	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	rootCmd.PersistentFlags().StringVarP(&Appname, "appname", "a", "testapp", "name of the application")
+	rootCmd.PersistentFlags().StringVarP(&Appport, "appport", "p", "80", "port of the application")
+	rootCmd.PersistentFlags().StringVarP(&Appenv, "env", "e", "staging", "name of the environment IE:production, staging, development")
+	rootCmd.PersistentFlags().StringVarP(&Namespace, "namespace", "n", "testapp-staging", "namespace of the application, defaults to appname-env IE myapp-production")
+	rootCmd.PersistentFlags().StringVarP(&Repoendpoint, "repoendpoint", "r", "xyz.dkr.ecr.eu-west-1.amazonaws.com", "repository endpoint of the application, defaults to docker.io/{appname}")
+	rootCmd.PersistentFlags().StringVarP(&Reponame, "reponame", "o", "myrepo/testapp", "repository name of the application, defaults to {appname}")
+	rootCmd.PersistentFlags().StringVarP(&Repoversion, "repoversion", "v", "1.0.0", "version of the repository")
 }
