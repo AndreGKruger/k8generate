@@ -1,5 +1,5 @@
 /*
-Copyright © 2022 Andre Kruger <andre@hyvemobile.co.za>
+Copyright © 2022 Andre Kruger
 */
 package cmd
 
@@ -12,9 +12,10 @@ import (
 )
 
 var (
-	Appname   string
-	Appenv    string
-	Namespace string
+	Appname     string
+	Serviceport string
+	Appenv      string
+	Namespace   string
 )
 
 // serviceCmd represents the service command
@@ -26,7 +27,7 @@ The file is generated in the directory ./kubernetes/{Appenv}/k8_service.yaml
 For example: kubernetes/production/k8_service.yaml .`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("generating kubernetes service file ...")
-		s := service.New(strings.ToLower(Appname), strings.ToLower(Appenv), strings.ToLower(Namespace))
+		s := service.New(strings.ToLower(Appname), strings.ToLower(Serviceport), strings.ToLower(Appenv), strings.ToLower(Namespace))
 		err := s.Generate()
 		if err != nil {
 			fmt.Println(err)
@@ -37,10 +38,4 @@ For example: kubernetes/production/k8_service.yaml .`,
 
 func init() {
 	rootCmd.AddCommand(serviceCmd)
-	// Local flags
-	serviceCmd.Flags().StringVarP(&Appname, "appname", "a", "", "name of the application")
-	serviceCmd.MarkFlagRequired("appname")
-	serviceCmd.Flags().StringVarP(&Appenv, "env", "e", "", "name of the environment IE:production, staging, development")
-	serviceCmd.MarkFlagRequired("appenv")
-	serviceCmd.Flags().StringVarP(&Namespace, "namespace", "n", "", "namespace of the application, defaults to appname-env IE myapp-production")
 }

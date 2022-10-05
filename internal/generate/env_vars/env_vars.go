@@ -23,9 +23,7 @@ func New() EnvVars {
 
 func (e *env) GenerateVarsFromFileBytes(file []byte, lowercase bool) []Envvar {
 	result := make([]Envvar, 0)
-	//Split the file into lines
 	lines := strings.Split(string(file), "\n")
-	//Loop through the lines and create a slice of envvars
 	for _, line := range lines {
 		if line != "" && !strings.HasPrefix(line, "#") {
 			if !containsSecrets(line) {
@@ -45,9 +43,7 @@ func (e *env) GenerateVarsFromFileBytes(file []byte, lowercase bool) []Envvar {
 
 func (e *env) GenerateSecretsFromFileBytes(file []byte, lowercase bool) []Envvar {
 	result := make([]Envvar, 0)
-	//Split the file into lines
 	lines := strings.Split(string(file), "\n")
-	//Loop through the lines and create a slice of envvars
 	for _, line := range lines {
 		if line != "" && !strings.HasPrefix(line, "#") {
 			if containsSecrets(line) {
@@ -68,7 +64,6 @@ func (e *env) GenerateSecretsFromFileBytes(file []byte, lowercase bool) []Envvar
 var listOfSecrets = []string{"secret", "api", "key", "pass", "user", "token"}
 
 func containsSecrets(envvar string) bool {
-	//Check if the envvar contains any of the secrets
 	for _, secret := range listOfSecrets {
 		if strings.Contains(strings.ToLower(envvar), secret) {
 			return true

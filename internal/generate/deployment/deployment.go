@@ -8,13 +8,14 @@ import (
 	e "github.com/AndreGKruger/k8generate/internal/generate/env_vars"
 )
 
-func New(Appname string, Appenv string, Namespace string, Repoendpoint string, Reponame string, Repoversion string) generate.Generate {
+func New(Appname string, Podport string, Appenv string, Namespace string, Repoendpoint string, Reponame string, Repoversion string) generate.Generate {
 	if Namespace == "" {
 		Namespace = Appname + "-" + Appenv
 	}
 	return &deploymentImpl{
 		Appname:      Appname,
 		Appenv:       Appenv,
+		Podport:      Podport,
 		Namespace:    Namespace,
 		Repoendpoint: Repoendpoint,
 		Reponame:     Reponame,
@@ -27,6 +28,7 @@ func New(Appname string, Appenv string, Namespace string, Repoendpoint string, R
 type deploymentImpl struct {
 	Appname      string
 	Appenv       string
+	Podport      string
 	Namespace    string
 	Repoendpoint string
 	Reponame     string
@@ -38,7 +40,6 @@ type deploymentImpl struct {
 }
 
 func (s *deploymentImpl) Generate() error {
-	//Open .env.example file in project root directory of the application
 	envfile, err := os.ReadFile(".env")
 	if err != nil {
 		if os.IsNotExist(err) {
@@ -82,7 +83,7 @@ spec:
           livenessProbe:
             httpGet:
                 path: /healthcheck
-                port: 80
+                port: {{ .Podport }}
                 httpHeaders:
                   - name: Accept
                     value: application/json
@@ -90,7 +91,7 @@ spec:
             periodSeconds: 60
           ports:
             - name: http
-              containerPort: 80
+              containerPort: {{ .Podport }}
               protocol: TCP
           env:
             {{range .Envvars}}- name: {{.Name}}
