@@ -43,11 +43,11 @@ func init() {
 	deploymentCmd.Flags().StringVarP(&Appenv, "env", "e", "", "name of the environment IE:production, staging, development")
 	deploymentCmd.MarkFlagRequired("appenv")
 	deploymentCmd.Flags().StringVarP(&Namespace, "namespace", "n", "", "namespace of the application, defaults to appname-env IE myapp-production")
-	deploymentCmd.Flags().StringVarP(&Repoendpoint, "repoendpoint", "r", "", "endpoint of the repository IE: xyz.dkr.ecr.eu-west-1.amazonaws.com")
-	deploymentCmd.MarkFlagRequired("repoendpoint")
-	deploymentCmd.Flags().StringVarP(&Reponame, "reponame", "p", "", "name of the repository IE: myrepo/myapp")
-	deploymentCmd.MarkFlagRequired("reponame")
-	deploymentCmd.Flags().StringVarP(&Repoversion, "repoversion", "v", "", "version of the repository IE: 1.0.0")
-	deploymentCmd.MarkFlagRequired("repoversion")
+	deploymentCmd.Flags().StringVarP(&Repoendpoint, "repo endpoint", "r", "", "endpoint of the repository IE: xyz.dkr.ecr.eu-west-1.amazonaws.com")
+	deploymentCmd.MarkFlagRequired("repo endpoint")
+	deploymentCmd.Flags().StringVarP(&Reponame, "repo name", "p", "", "name of the repository IE: myrepo/myapp")
+	deploymentCmd.MarkFlagRequired("repo name")
+	deploymentCmd.Flags().StringVarP(&Repoversion, "repo version", "v", "", "version of the repository IE: 1.0.0")
+	deploymentCmd.MarkFlagRequired("repo version")
 
 }

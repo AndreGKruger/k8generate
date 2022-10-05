@@ -50,7 +50,7 @@ func (c *configmapImpl) Generate() error {
 	lines := strings.Split(string(envfile), "\n")
 	//Loop through the lines and create a slice of envvars
 	for _, line := range lines {
-		if line != "" {
+		if line != "" && !strings.HasPrefix(line, "#") {
 			if !generate.ContainsSecrets(line) {
 				env := strings.Split(line, "=")
 				c.Envvars = append(c.Envvars, envvar{Name: strings.ToLower(env[0]), Value: env[1]})
