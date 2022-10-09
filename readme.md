@@ -19,11 +19,17 @@ run `k8generate --help` for more information.
 
 ---
 
+### Interactive cli:
+    - k8generate prompt
+
+---
+
 ### Available Commands:
     - all         Generates all the k8 files (configmap, secret, deployment, service)    
     - configmap   Generates a k8_configmap.yaml file
     - deployment  Generates a k8_deployment.yaml file
     - help        Help about any command
+    - prompt      Interactive cli
     - secret      Generates a k8_secrets.yaml file
     - service     Generates a k8_service.yaml file
 ---
