@@ -15,7 +15,7 @@ var rootCmd = &cobra.Command{
 	Long: `k8generate:
 k8generate is a simple CLI tool to generate boilerplate Kubernetes yaml files
 Generate boilerplate Kubernetes yaml files
-Specifically written to generate boilerplate yaml files for Hyve Mobile projects.`,
+Specifically written to generate boilerplate yaml files for internal projects.`,
 }
 
 func Execute() {
